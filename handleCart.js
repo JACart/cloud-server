@@ -14,7 +14,7 @@ module.exports.isConnected = () => {
 module.exports.handle = async (nsp) => {
   cartOutgoingEvents.map((x) => {
     eventManager.on(x, (data) => {
-      cart.socket?.emit(x, data)
+      if (cart.socket) cart.socket.emit(x, data)
     })
   })
 
