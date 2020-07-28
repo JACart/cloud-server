@@ -1,42 +1,30 @@
 global.CARTID = require('./connections').cartID
 const model = require('./Models/Cart')
 
-let cartstate
+let cartstate = {
+  _id: CARTID,
+  latitude: 0,
+  longitude: 0,
+  destination: '',
+  active: false,
+  userId: '',
+  state: 'idle',
+}
 
 global.CARTSTATE = () => cartstate
 
-module.exports.init = async () => {
-  cartstate = await model.findById(CARTID)
-  if (!cartstate) {
-    const newState = {
-      _id: CARTID,
-      latitude: 0,
-      longitude: 0,
-      destination: '',
-      active: false,
-      userId: '',
-      state: 'idle',
-    }
-    cartstate = new model(newState)
-    await cartstate.save()
-  }
-}
-
 module.exports.connect = async (state) => {
-  const cartstate = new model(state)
-  await model.updateOne({ _id: CARTID }, cartstate)
+  cartstate = state
   emitStateForClient()
 }
 
 module.exports.disconnect = async () => {
   cartstate.active = false
-  await cartstate.save()
   emitStateForClient()
 }
 
 module.exports.reconnect = async () => {
   cartstate.active = true
-  await cartstate.save()
   emitStateForClient()
 }
 
@@ -50,7 +38,6 @@ module.exports.summon = async (data, socket) => {
     cartstate.latitude = data.latitude
     cartstate.longitude = data.longitude
     cartstate.state = 'summon-start'
-    cartstate.save()
     emitStateForClient()
     eventManager.emit('summon', {
       id: data.id,
@@ -70,7 +57,6 @@ module.exports.cancelSummon = async (id, socket) => {
       cartstate.longitude = 0
       cartstate.destination = ''
       cartstate.state = 'idle'
-      await cartstate.save()
     }
     emitStateForClient()
     eventManager.emit('summon-cancel')
@@ -80,20 +66,18 @@ module.exports.cancelSummon = async (id, socket) => {
 module.exports.summonFinish = async () => {
   cartstate.state = 'summon-finish'
   cartstate.destination = ''
-  await cartstate.save()
   emitStateForClient()
 }
 
-module.exports.transitStart = async () => {
-  cartstate.state = 'transit-start'
-  await cartstate.save()
+module.exports.transitStart = (data) => {
+  console.log(data)
+  cartstate = data
   emitStateForClient()
 }
 
 module.exports.transitEnd = async () => {
   cartstate.destination = ''
   cartstate.state = 'transit-end'
-  await cartstate.save()
   emitStateForClient()
 }
 
@@ -106,7 +90,6 @@ module.exports.passengerExit = async () => {
 
 module.exports.setDestination = async (name) => {
   cartstate.destination = name
-  await cartstate.save()
 }
 
 function emitStateForClient() {

@@ -32,7 +32,7 @@ module.exports.handle = async (nsp) => {
       data === true ? cartState.reconnect() : cartState.disconnect()
     })
 
-    socket.on('transit-start', async () => await cartState.transitStart())
+    socket.on('transit-start', (data) => cartState.transitStart(data))
 
     socket.on('transit-end', async () => await cartState.transitEnd())
 
