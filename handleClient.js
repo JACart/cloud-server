@@ -19,6 +19,8 @@ module.exports = async (nsp) => {
         longitude: data.longitude,
       }
 
+      eventManager.emit('log', { type: 'client-connected', msg: data })
+
       socket.emit(
         'cart-status',
         JSON.stringify({
@@ -32,10 +34,12 @@ module.exports = async (nsp) => {
 
     socket.on('summon', async (data) => {
       await cartState.summon(JSON.parse(data), socket)
+      eventManager.emit('log', { type: 'summon', msg: data })
     })
 
     socket.on('cancel', async (id) => {
       await cartState.cancelSummon(id, socket)
+      eventManager.emit('log', { type: 'summon-cancel', msg: data })
     })
 
     socket.on('gps', (data) => {
@@ -56,6 +60,7 @@ module.exports = async (nsp) => {
           }
         }
       }
+      eventManager.emit('log', { type: 'client-disconnected', msg: key })
       eventManager.emit('client-change', Object.keys(clients))
     })
   })

@@ -1,4 +1,5 @@
 global.CARTID = require('./connections').cartID
+const { json } = require('express')
 const model = require('./Models/Cart')
 
 let cartstate = {
@@ -9,22 +10,36 @@ let cartstate = {
   active: false,
   userId: '',
   state: 'idle',
+  path: [],
 }
 
 global.CARTSTATE = () => cartstate
 
 module.exports.connect = async (state) => {
   cartstate = state
+
+  eventManager.emit('log', { type: 'cart-connect', msg: '{}' })
+  eventManager.emit('cart-change', 1)
+  eventManager.emit('state-change', cartstate.state)
+
   emitStateForClient()
 }
 
 module.exports.disconnect = async () => {
   cartstate.active = false
+  eventManager.emit('log', { type: 'cart-disconnect', msg: '{}' })
+  eventManager.emit('cart-change', 0)
+  eventManager.emit('state-change', cartstate.state)
+
   emitStateForClient()
 }
 
 module.exports.reconnect = async () => {
   cartstate.active = true
+  eventManager.emit('log', { type: 'cart-reconnect', msg: '{}' })
+  eventManager.emit('cart-change', 1)
+  eventManager.emit('state-change', cartstate.state)
+
   emitStateForClient()
 }
 
@@ -45,6 +60,12 @@ module.exports.summon = async (data, socket) => {
       longitude: data.longitude,
     })
   }
+  eventManager.emit('state-change', cartstate.state)
+
+  eventManager.emit('log', {
+    type: 'cart-state',
+    msg: JSON.stringify(cartstate),
+  })
 }
 
 module.exports.cancelSummon = async (id, socket) => {
@@ -60,6 +81,7 @@ module.exports.cancelSummon = async (id, socket) => {
     }
     emitStateForClient()
     eventManager.emit('summon-cancel')
+    eventManager.emit('state-change', cartstate.state)
   }
 }
 
@@ -67,18 +89,33 @@ module.exports.summonFinish = async () => {
   cartstate.state = 'summon-finish'
   cartstate.destination = ''
   emitStateForClient()
+  eventManager.emit('log', {
+    type: 'summon-finish',
+    msg: JSON.stringify(cartstate),
+  })
+  eventManager.emit('state-change', cartstate.state)
 }
 
 module.exports.transitStart = (data) => {
   console.log(data)
   cartstate = data
   emitStateForClient()
+  eventManager.emit('state-change', cartstate.state)
+  eventManager.emit('log', {
+    type: 'transit-start',
+    msg: JSON.stringify(cartstate),
+  })
 }
 
 module.exports.transitEnd = async () => {
   cartstate.destination = ''
   cartstate.state = 'transit-end'
   emitStateForClient()
+  eventManager.emit('log', {
+    type: 'transit-end',
+    msg: JSON.stringify(cartstate),
+  })
+  eventManager.emit('state-change', cartstate.state)
 }
 
 module.exports.passengerExit = async () => {
@@ -86,10 +123,17 @@ module.exports.passengerExit = async () => {
   cartstate.destination = ''
   cartstate.state = 'idle'
   emitStateForClient()
+  eventManager.emit('log', {
+    type: 'passenger-exit',
+    msg: JSON.stringify(cartstate),
+  })
+  eventManager.emit('state-change', cartstate.state)
+  eventManager.emit('log', { type: 'passenger-exit', msg: '{}' })
 }
 
 module.exports.setDestination = async (name) => {
   cartstate.destination = name
+  eventManager.emit('log', { type: 'set-destination', msg: name })
 }
 
 function emitStateForClient() {

@@ -12,7 +12,7 @@ global.eventManager = new events()
 ;(async function init() {
   handleClient(io.of('/client'))
   handleCart.handle(io.of('/cart'))
-  // handleAdmin(io.of('/admin'))
+  handleAdmin(io.of('/admin'))
 
   server.listen(8020, () => {
     console.log('server started at 8020')
