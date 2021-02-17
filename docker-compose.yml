@@ -10,5 +10,7 @@ services:
       - "traefik.http.routers.cal.rule=Host(`cart.av.cise.jmu.edu`)"
       - "traefik.http.routers.cal.entrypoints=web"
       - "traefik.http.services.cal.loadbalancer.server.port=8020"
+    volumes:
+      - cloud-server:/usr/app
 volumes:
-  - /cloud-server:/usr/app
+  cloud-server:
