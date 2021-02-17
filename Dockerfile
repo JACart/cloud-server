@@ -8,4 +8,5 @@ RUN apk update && \
 RUN git clone https://github.com/JACart/cloud-server/
 RUN mv cloud-server/* .
 RUN npm i --quiet
+RUN npm start
 COPY . .
