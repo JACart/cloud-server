@@ -1,7 +1,6 @@
 import { cancelSummon, CartState, summon } from './cartState'
 import { eventManager } from './server'
 import { cartOutgoingEvents, clientBroadcastEvents } from './connections'
-// const { clientOutgoingEvents, clientBroadcastEvents } = require('./connections')
 import { cartState } from './cartState'
 import { AnyCnameRecord } from 'dns'
 import { Socket } from 'dgram'

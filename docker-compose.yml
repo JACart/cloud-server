@@ -1,12 +1,12 @@
 version: "3.0"
 services:
-        web:
-                build: .
-                command: npm start
-                ports:
-                        - "8020:8020"
-        labels:
-                - "traefik.enable=true"
-                - "traefik.http.routers.cal.rule=Host(`cart.av.cise.jmu.edu`)"
-                - "traefik.http.routers.cal.entrypoints=web"
-                - "traefik.http.services.cal.loadbalancer.server.port=8020"
+  web:
+    build: .
+    command: npm start
+    ports:
+      - "8020:8020"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cal.rule=Host(`cart.av.cise.jmu.edu`)"
+      - "traefik.http.routers.cal.entrypoints=web"
+      - "traefik.http.services.cal.loadbalancer.server.port=8020"
