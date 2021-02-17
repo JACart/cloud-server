@@ -4,8 +4,6 @@ services:
                 build: .
                 ports:
                         - "8020:8020"
-        redis:
-                image: "node:12.18.3-alpine"
         labels:
                 - "traefik.enable=true"
                 - "traefik.http.routers.cal.rule=Host(`cart.av.cise.jmu.edu`)"
