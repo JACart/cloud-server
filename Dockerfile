@@ -1,11 +1,7 @@
-FROM node:12.18.3-alpine
-WORKDIR /usr/app
-EXPOSE 8020
-COPY package.json .
-RUN apk update && \
-    apk upgrade && \
-    apk add git
-RUN git clone https://github.com/JACart/cloud-server/
-RUN mv cloud-server/* .
-RUN npm i --quiet
+FROM node:12.18.2-alpine3.9 as client
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm ci --silent
 COPY . .
+EXPOSE 8020
+CMD [ "npm", "start" ]

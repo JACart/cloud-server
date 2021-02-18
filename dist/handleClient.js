@@ -13,7 +13,6 @@ exports.handleClient = void 0;
 const cartState_1 = require("./cartState");
 const server_1 = require("./server");
 const connections_1 = require("./connections");
-// const { clientOutgoingEvents, clientBroadcastEvents } = require('./connections')
 const cartState_2 = require("./cartState");
 const clients = {};
 var handleClient = (nsp) => __awaiter(void 0, void 0, void 0, function* () {

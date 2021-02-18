@@ -15,12 +15,10 @@ const server = http.createServer(app)
 
 const io = require('socket.io')(server)
 
-// const io = new Socket('ws://localhost:8020')
-
 export const eventManager: EventEmitter = new EventEmitter()
 
 app.get('/', (req, res) => {
-  res.send('hey hey')
+  res.send('hey  hey')
 })
 
 //

@@ -44,7 +44,6 @@ const events_1 = require("events");
 const app = express_1.default();
 const server = http.createServer(app);
 const io = require('socket.io')(server);
-// const io = new Socket('ws://localhost:8020')
 exports.eventManager = new events_1.EventEmitter();
 app.get('/', (req, res) => {
     res.send('hey hey');
