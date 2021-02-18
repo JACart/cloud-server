@@ -1,8 +1,8 @@
 version: "3.0"
 services:
   web:
-    build: .
-    command: npm start
+    image: mattywolfson/cloud-server:latest
+    container_name: cloud-server
     ports:
       - "8020:8020"
     labels:
