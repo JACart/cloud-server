@@ -3,8 +3,8 @@ import { CARTSTATE, CartState } from './cartState'
 import { CARTGPS } from './handleCart'
 import { eventManager } from './server'
 
-export var handleAdmin = async (nsp: any) => {
-  eventManager.on('log', (data: String) => {
+export let handleAdmin = async (nsp: any) => {
+  eventManager.on('log', (data: string) => {
     nsp.emit('admin_log', data)
   })
 
@@ -16,16 +16,16 @@ export var handleAdmin = async (nsp: any) => {
     nsp.emit('cart_gps', data)
   })
 
-  eventManager.on('path', (data: String) => {
+  eventManager.on('path', (data: string) => {
     console.log(data)
     nsp.emit('path', data)
   })
 
-  eventManager.on('cart-change', (data: String) => {
+  eventManager.on('cart-change', (data: string) => {
     nsp.emit('cart_change', data)
   })
 
-  eventManager.on('state-change', (data: String) => {
+  eventManager.on('state-change', (data: string) => {
     nsp.emit('state_change', data)
   })
 

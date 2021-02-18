@@ -13,7 +13,7 @@ exports.handleAdmin = void 0;
 const cartState_1 = require("./cartState");
 const handleCart_1 = require("./handleCart");
 const server_1 = require("./server");
-var handleAdmin = (nsp) => __awaiter(void 0, void 0, void 0, function* () {
+let handleAdmin = (nsp) => __awaiter(void 0, void 0, void 0, function* () {
     server_1.eventManager.on('log', (data) => {
         nsp.emit('admin_log', data);
     });

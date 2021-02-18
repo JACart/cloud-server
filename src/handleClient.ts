@@ -1,13 +1,11 @@
-import { cancelSummon, CartState, summon } from './cartState'
-import { eventManager } from './server'
-import { cartOutgoingEvents, clientBroadcastEvents } from './connections'
-import { cartState } from './cartState'
-import { AnyCnameRecord } from 'dns'
 import { Socket } from 'dgram'
+import { cancelSummon, CartState, cartState, summon } from './cartState'
+import { clientBroadcastEvents } from './connections'
+import { eventManager } from './server'
 
 const clients = {}
 
-export var handleClient = async (nsp: Socket) => {
+export let handleClient = async (nsp: Socket) => {
   clientBroadcastEvents.map((x: string) => {
     eventManager.on(x, (data: CartState) => nsp.emit(x, data))
   })
@@ -16,9 +14,9 @@ export var handleClient = async (nsp: Socket) => {
     socket.on('client-id', async (data: any) => {
       const json = JSON.parse(data)
       clients[json.id] = {
-        socket: socket,
         latitude: data.latitude,
         longitude: data.longitude,
+        socket,
       }
 
       eventManager.emit('log', { type: 'client-connected', msg: data })
@@ -26,9 +24,9 @@ export var handleClient = async (nsp: Socket) => {
         'cart-status',
         JSON.stringify({
           active: cartState.active,
-          userId: cartState.userId,
-          status: cartState.state,
           destination: cartState.destination,
+          status: cartState.state,
+          userId: cartState.userId,
         })
       )
     })

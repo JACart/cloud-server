@@ -46,7 +46,7 @@ const server = http.createServer(app);
 const io = require('socket.io')(server);
 exports.eventManager = new events_1.EventEmitter();
 app.get('/', (req, res) => {
-    res.send('hey hey');
+    res.send('hey  hey');
 });
 (function init() {
     return __awaiter(this, void 0, void 0, function* () {

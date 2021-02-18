@@ -12,7 +12,7 @@ import {
 } from './cartState'
 import { eventManager } from './server'
 
-let cart = { socket: null }
+const cart = { socket: null }
 
 export interface cartGPS {
   latitude: number
@@ -26,7 +26,7 @@ const cartOutgoingEvents = []
 import { isVariableStatement } from 'typescript'
 // const { cartOutgoingEvents } = require('./connections')
 
-export var isConnected = () => {
+export let isConnected = () => {
   if (cart.socket) {
     return cart.socket.connected
   } else {
@@ -34,10 +34,10 @@ export var isConnected = () => {
   }
 }
 
-export var handleCart = async (nsp: any) => {
+export let handleCart = async (nsp: any) => {
   cartOutgoingEvents.map((x: any) => {
     eventManager.on(x, (data: CartState) => {
-      if (cart.socket) cart.socket.emit(x, data)
+      if (cart.socket) { cart.socket.emit(x, data) }
     })
   })
 

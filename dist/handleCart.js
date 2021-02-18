@@ -12,12 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleCart = exports.isConnected = exports.CARTGPS = void 0;
 const cartState_1 = require("./cartState");
 const server_1 = require("./server");
-let cart = { socket: null };
+const cart = { socket: null };
 exports.CARTGPS = { latitude: 38.433905, longitude: -78.862169 };
 // import { cartOutgoingEvents } from './connections'
 const cartOutgoingEvents = [];
 // const { cartOutgoingEvents } = require('./connections')
-var isConnected = () => {
+let isConnected = () => {
     if (cart.socket) {
         return cart.socket.connected;
     }
@@ -26,11 +26,12 @@ var isConnected = () => {
     }
 };
 exports.isConnected = isConnected;
-var handleCart = (nsp) => __awaiter(void 0, void 0, void 0, function* () {
+let handleCart = (nsp) => __awaiter(void 0, void 0, void 0, function* () {
     cartOutgoingEvents.map((x) => {
         server_1.eventManager.on(x, (data) => {
-            if (cart.socket)
+            if (cart.socket) {
                 cart.socket.emit(x, data);
+            }
         });
     });
     nsp.on('connection', (socket) => {

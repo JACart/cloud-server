@@ -11,11 +11,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleClient = void 0;
 const cartState_1 = require("./cartState");
-const server_1 = require("./server");
 const connections_1 = require("./connections");
-const cartState_2 = require("./cartState");
+const server_1 = require("./server");
 const clients = {};
-var handleClient = (nsp) => __awaiter(void 0, void 0, void 0, function* () {
+let handleClient = (nsp) => __awaiter(void 0, void 0, void 0, function* () {
     connections_1.clientBroadcastEvents.map((x) => {
         server_1.eventManager.on(x, (data) => nsp.emit(x, data));
     });
@@ -24,16 +23,16 @@ var handleClient = (nsp) => __awaiter(void 0, void 0, void 0, function* () {
         socket.on('client-id', (data) => __awaiter(void 0, void 0, void 0, function* () {
             const json = JSON.parse(data);
             clients[json.id] = {
-                socket: socket,
                 latitude: data.latitude,
                 longitude: data.longitude,
+                socket,
             };
             server_1.eventManager.emit('log', { type: 'client-connected', msg: data });
             socket.emit('cart-status', JSON.stringify({
-                active: cartState_2.cartState.active,
-                userId: cartState_2.cartState.userId,
-                status: cartState_2.cartState.state,
-                destination: cartState_2.cartState.destination,
+                active: cartState_1.cartState.active,
+                destination: cartState_1.cartState.destination,
+                status: cartState_1.cartState.state,
+                userId: cartState_1.cartState.userId,
             }));
         }));
         socket.on('summon', (data) => __awaiter(void 0, void 0, void 0, function* () {
