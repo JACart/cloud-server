@@ -4,7 +4,7 @@ services:
     image: mattywolfson/cloud-server:latest
     container_name: cloud-server
     ports:
-      - "80:80"
+      - "8020:8020"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.cal.rule=Host(`cart.av.cise.jmu.edu`)"

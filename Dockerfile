@@ -6,4 +6,4 @@ ADD . /usr/src/app
 RUN npm install -g typescript
 RUN tsc
 CMD [ "node", "./dist/server.js" ]
-EXPOSE 80
+EXPOSE 8020
