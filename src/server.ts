@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
   handleCart(io.of('/cart'))
   handleAdmin(io.of('/admin'))
 
-  server.listen(8020, () => {
-    console.log('server started at 8020')
+  server.listen(80, () => {
+    console.log('server started at 80')
   })
 })()
