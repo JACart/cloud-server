@@ -28,6 +28,6 @@ app.get('/', (req, res) => {
   handleAdmin(io.of('/admin'))
 
   server.listen(8020, () => {
-    console.log('server started at 8020')
+    console.log('server started at 8020!!')
   })
 })()
