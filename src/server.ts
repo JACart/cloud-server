@@ -18,7 +18,7 @@ const io = require('socket.io')(server)
 export const eventManager: EventEmitter = new EventEmitter()
 
 app.get('/', (req, res) => {
-  res.send('hey  hey')
+  res.send('shorturl.at/hqCK0')
 })
 
 //
