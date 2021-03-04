@@ -8,7 +8,7 @@ import {
   setDestination,
   summonFinish,
   transitEnd,
-  transitStart,
+  transitStart
 } from './cartState'
 import { eventManager } from './server'
 
@@ -23,7 +23,6 @@ export let CARTGPS: cartGPS = { latitude: 38.433905, longitude: -78.862169 }
 
 // import { cartOutgoingEvents } from './connections'
 const cartOutgoingEvents = []
-import { isVariableStatement } from 'typescript'
 // const { cartOutgoingEvents } = require('./connections')
 
 export let isConnected = () => {
@@ -42,6 +41,10 @@ export let handleCart = async (nsp: any) => {
   })
 
   nsp.on('connection', (socket: any) => {
+    // this is where you can log an incoming conn
+
+    console.log('cart connection incoming');
+    
     socket.on('cart-connect', async (data: CartState) => {
       cart.socket = socket
       await connect(data)
