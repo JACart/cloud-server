@@ -9,14 +9,16 @@ module.exports = async (nsp) => {
     eventManager.on(x, (data) => nsp.emit(x, data))
   })
   nsp.on('connection', (socket) => {
+    console.log('incoming client')
     socket.emit('success')
     socket.on('client-id', async (data) => {
       const json = JSON.parse(data)
+      console.log(json)
 
-      clients[json.id] = {
+      clients[socket.id] = {
         socket: socket,
-        latitude: data.latitude,
-        longitude: data.longitude,
+        latitude: json.latitude,
+        longitude: json.longitude,
       }
 
       eventManager.emit('log', { type: 'client-connected', msg: data })
@@ -51,16 +53,16 @@ module.exports = async (nsp) => {
       eventManager.emit('client-gps', JSON.parse(data))
     })
 
-    socket.on('disconnect', (cartId) => {
+    socket.on('disconnect', () => {
       for (const key in clients) {
         if (clients.hasOwnProperty(key)) {
           const element = clients[key].socket
+          eventManager.emit('log', { type: 'client-disconnected', msg: key })
           if (!element.connected) {
             delete clients[key]
           }
         }
       }
-      eventManager.emit('log', { type: 'client-disconnected', msg: key })
       eventManager.emit('client-change', Object.keys(clients))
     })
   })
