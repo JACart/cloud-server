@@ -44,6 +44,8 @@ module.exports.reconnect = async () => {
 }
 
 module.exports.summon = async (data, socket) => {
+  console.log(cartState)
+  console.log(data)
   if (!cartstate.active) {
     emitStateForClient()
   } else if (cartstate.userId !== '') {
