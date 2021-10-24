@@ -45,7 +45,6 @@ module.exports.reconnect = async () => {
 
 module.exports.summon = async (data, socket) => {
   console.log(cartstate)
-  console.log(data)
   if (!cartstate.active) {
     emitStateForClient()
   } else if (cartstate.userId !== '') {
@@ -61,6 +60,8 @@ module.exports.summon = async (data, socket) => {
       latitude: data.latitude,
       longitude: data.longitude,
     })
+    console.log('-------->>>->')
+    console.log(cartstate)
   }
   eventManager.emit('state-change', cartstate.state)
 
@@ -139,6 +140,8 @@ module.exports.setDestination = async (name) => {
 }
 
 function emitStateForClient() {
+  console.log('--------->')
+  console.log(cartstate)
   eventManager.emit(
     'cart-status',
     JSON.stringify({
