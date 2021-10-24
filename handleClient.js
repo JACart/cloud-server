@@ -44,14 +44,14 @@ module.exports = async (nsp) => {
       eventManager.emit('log', { type: 'summon-cancel', msg: data })
     })
 
-    socket.on('gps', (data) => {
-      const json = JSON.parse(data)
-      if (client[json.id]) {
-        client[json.id].latitude = json.latitude
-        client[json.id].longitude = json.longitude
-      }
-      eventManager.emit('client-gps', JSON.parse(data))
-    })
+    // socket.on('gps', (data) => {
+    //   const json = JSON.parse(data)
+    //   if (client[json.id]) {
+    //     client[json.id].latitude = json.latitude
+    //     client[json.id].longitude = json.longitude
+    //   }
+    //   eventManager.emit('client-gps', JSON.parse(data))
+    // })
 
     socket.on('disconnect', () => {
       for (const key in clients) {
