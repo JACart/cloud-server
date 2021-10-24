@@ -50,6 +50,7 @@ module.exports.summon = async (data, socket) => {
   } else if (cartstate.userId !== '') {
     emitStateForClient()
   } else {
+    console.log(data)
     cartstate.userId = data.id
     cartstate.latitude = data.latitude
     cartstate.longitude = data.longitude
