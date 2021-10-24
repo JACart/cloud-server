@@ -30,8 +30,8 @@ module.exports.handle = async (nsp) => {
     })
 
     socket.on('gps', (data) => {
-      CARTGPS().latitude = data.latitude
-      CARTGPS().longitude = data.longitude
+      CARTGPS.latitude = data.latitude
+      CARTGPS.longitude = data.longitude
       eventManager.emit('cart-gps', data)
       console.log('gps for cart')
     })
