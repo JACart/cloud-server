@@ -45,11 +45,14 @@ module.exports.reconnect = async () => {
 
 module.exports.summon = async (data, socket) => {
   console.log(cartstate)
+  console.log(data)
+
   if (!cartstate.active) {
     emitStateForClient()
   } else if (cartstate.userId !== '') {
     emitStateForClient()
   } else {
+    console.log('-------->>>->')
     console.log(data)
     cartstate.userId = data.id
     cartstate.latitude = data.latitude
