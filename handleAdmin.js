@@ -1,3 +1,5 @@
+const { cartOutgoingEvents } = require('./connections')
+
 module.exports = async (nsp) => {
   eventManager.on('log', (data) => {
     nsp.emit('admin_log', data)
@@ -25,6 +27,14 @@ module.exports = async (nsp) => {
   })
 
   nsp.on('connection', (socket) => {
+    console.log('incoming connection')
+
+    cartOutgoingEvents.forEach((x) => {
+      socket.on(x, (data) => {
+        eventManager.emit(x, data)
+      })
+    })
+
     socket.on('get', () => {
       socket.emit('cart_change', CARTSTATE().active ? 1 : 0)
       socket.emit('path', CARTSTATE().path ? CARTSTATE().path : [])
