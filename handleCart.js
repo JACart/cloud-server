@@ -1,5 +1,6 @@
 let cart = { socket: null }
 global.CARTGPS = { latitude: 38.433905, longitude: -78.862169 }
+global.CARTSPEED = 0
 
 const { cartOutgoingEvents } = require('./connections')
 const cartState = require('./cartState')
@@ -33,6 +34,11 @@ module.exports.handle = async (nsp) => {
       CARTGPS.latitude = data.latitude
       CARTGPS.longitude = data.longitude
       eventManager.emit('cart-gps', data)
+    })
+
+    socket.on('speed', (data) => {
+      CARTSPEED = data
+      eventManager.emit('cart-speed', data)
     })
 
     socket.on('path', (data) => {
