@@ -10,7 +10,11 @@ module.exports = async (nsp) => {
   })
 
   eventManager.on('cart-gps', (data) => {
-    nsp.emit('cart_gps', data)
+    nsp.emit('cart-gps', data)
+  })
+
+  eventManager.on('cart-speed', (data) => {
+    nsp.emit('cart-speed', data)
   })
 
   eventManager.on('path', (data) => {
@@ -27,7 +31,7 @@ module.exports = async (nsp) => {
   })
 
   eventManager.on('logs', (data) => {
-	nsp.emit('logs', data)
+    nsp.emit('logs', data)
   })
 
   nsp.on('connection', (socket) => {
