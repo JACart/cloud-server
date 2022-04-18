@@ -26,6 +26,10 @@ module.exports = async (nsp) => {
     nsp.emit('state_change', data)
   })
 
+  eventManager.on('logs', (data) => {
+	nsp.emit('logs', data)
+  })
+
   nsp.on('connection', (socket) => {
     console.log('incoming connection')
 
