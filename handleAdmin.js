@@ -17,6 +17,10 @@ module.exports = async (nsp) => {
     nsp.emit('cart-speed', data)
   })
 
+  eventManager.on('destination', (data) => {
+    nsp.emit('destination', data)
+  })
+
   eventManager.on('path', (data) => {
     console.log(data)
     nsp.emit('path', data)

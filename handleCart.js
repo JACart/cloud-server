@@ -47,6 +47,10 @@ module.exports.handle = async (nsp) => {
       console.log(data)
     })
 
+    socket.on('destination', (data) => {
+      eventManager.emit('destination', data)
+    })
+
     socket.on('path', (data) => {
       CARTSTATE().path = data
       eventManager.emit('path', data)
