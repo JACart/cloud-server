@@ -1,4 +1,3 @@
-const destinations = require("../local-server/destinations");
 
 module.exports = {
   mongo:

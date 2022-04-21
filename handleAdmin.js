@@ -55,7 +55,7 @@ module.exports = async (nsp) => {
         lng: CARTGPS.longitude,
       })
       socket.emit(
-        'state_change',
+        'active-change',
         CARTSTATE().active ? CARTSTATE().state : 'offline'
       )
     })

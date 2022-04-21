@@ -44,7 +44,6 @@ module.exports.handle = async (nsp) => {
 
     socket.on('logs', (data) => {
       eventManager.emit('logs', data)
-      console.log(data)
     })
 
     socket.on('destination', (data) => {
