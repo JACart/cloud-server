@@ -26,6 +26,11 @@ module.exports = async (nsp) => {
     nsp.emit('path', data)
   })
 
+	eventManager.on('active-change', (data) => {
+		console.log(data)
+		nsp.emit('active-change', data)
+	})
+
   eventManager.on('cart-change', (data) => {
     nsp.emit('cart_change', data)
   })
@@ -54,6 +59,7 @@ module.exports = async (nsp) => {
         lat: CARTGPS.latitude,
         lng: CARTGPS.longitude,
       })
+	console.log(CARTSTATE().active)
       socket.emit(
         'active-change',
         CARTSTATE().active ? CARTSTATE().state : 'offline'

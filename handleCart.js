@@ -21,9 +21,10 @@ module.exports.handle = async (nsp) => {
   })
 
   nsp.on('connection', (socket) => {
-    socket.on('cart-connect', async (data) => {
+socket.on('cart-connect', async (data) => {
       cart.socket = socket
       await cartState.connect(data)
+	eventManager.emit('active-change', true)    
     })
 
     socket.on('summon-finish', () => {
