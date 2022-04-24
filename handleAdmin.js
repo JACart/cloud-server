@@ -26,10 +26,10 @@ module.exports = async (nsp) => {
     nsp.emit('path', data)
   })
 
-	eventManager.on('active-change', (data) => {
-		console.log(data)
-		nsp.emit('active-change', data)
-	})
+  eventManager.on('active-change', (data) => {
+    console.log(data)
+    nsp.emit('active-change', data)
+  })
 
   eventManager.on('cart-change', (data) => {
     nsp.emit('cart_change', data)
@@ -41,6 +41,10 @@ module.exports = async (nsp) => {
 
   eventManager.on('logs', (data) => {
     nsp.emit('logs', data)
+  })
+
+  eventManager.on('pullover', (data) => {
+    nsp.emit('pullover', data)
   })
 
   nsp.on('connection', (socket) => {
@@ -59,7 +63,7 @@ module.exports = async (nsp) => {
         lat: CARTGPS.latitude,
         lng: CARTGPS.longitude,
       })
-	console.log(CARTSTATE().active)
+      console.log(CARTSTATE().active)
       socket.emit(
         'active-change',
         CARTSTATE().active ? CARTSTATE().state : 'offline'
