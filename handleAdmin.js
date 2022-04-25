@@ -43,7 +43,7 @@ module.exports = async (nsp) => {
     nsp.emit('logs', data)
   })
 
-  eventManager.on('pullover', (data) => {
+  eventManager.on('change-pullover', (data) => {
     nsp.emit('pullover', data)
   })
 

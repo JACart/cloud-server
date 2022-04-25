@@ -53,7 +53,7 @@ module.exports.handle = async (nsp) => {
 
     socket.on('pullover', (data) => {
       console.log("cloud receiving pullover :" + data)
-      eventManager.emit('pullover', data)
+      eventManager.emit('change-pullover', data)
     })
 
     socket.on('path', (data) => {
