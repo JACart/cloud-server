@@ -52,7 +52,7 @@ module.exports.handle = async (nsp) => {
     })
 
     socket.on('pullover', (data) => {
-      eventManager.emit('destination', data)
+      eventManager.emit('pullover', data)
     })
 
     socket.on('path', (data) => {
