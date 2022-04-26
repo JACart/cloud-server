@@ -2,7 +2,7 @@ let cart = { socket: null }
 global.CARTGPS = { latitude: 38.433905, longitude: -78.862169 }
 global.CARTSPEED = 0
 
-const { cartOutgoingEvents } = require('./connections')
+const { cartOutgoingEvents, localIncomingEvents, localOutgoingEvents } = require('./connections')
 const cartState = require('./cartState')
 
 module.exports.isConnected = () => {
@@ -14,13 +14,26 @@ module.exports.isConnected = () => {
 }
 
 module.exports.handle = async (nsp) => {
-  cartOutgoingEvents.map((x) => {
+  // cartOutgoingEvents.map((x) => {
+  //   eventManager.on(x, (data) => {
+  //     if (cart.socket) cart.socket.emit(x, data)
+  //   })
+  // })
+  localOutgoingEvents.map((x) => {
     eventManager.on(x, (data) => {
-      if (cart.socket) cart.socket.emit(x, data)
+      nsp.emit(x, data)
     })
   })
 
+  eventManager.on('get-destinations', (x) => {
+    console.log(x)
+  })
+
   nsp.on('connection', (socket) => {
+    localIncomingEvents.map((x) => {
+      socket.on(x, (data) => eventManager.emit(x, data))
+    })
+
     socket.on('cart-connect', async (data) => {
       cart.socket = socket
       await cartState.connect(data)
@@ -48,7 +61,11 @@ module.exports.handle = async (nsp) => {
     })
 
     socket.on('destination', (data) => {
-      eventManager.emit('destination', data)
+      eventManager.emit('destination-change', data)
+    })
+
+    socket.on('tts', (data) => {
+      eventManager.emit('tts', data)
     })
 
     socket.on('pullover', (data) => {

@@ -1,6 +1,19 @@
-const { cartOutgoingEvents } = require('./connections')
+const { cartOutgoingEvents, adminIncomingEvents, adminOutgoingEvents } = require('./connections')
 
 module.exports = async (nsp) => {
+
+  adminOutgoingEvents.map((x) => {
+    eventManager.on(x, (data) => {
+      nsp.emit(x, data)
+    })
+  })
+
+  eventManager.on('get-destinations', (data) => {
+
+    console.log(data)
+    nsp.emit('get-destinations', (data))
+  })
+
   eventManager.on('log', (data) => {
     nsp.emit('admin_log', data)
   })
@@ -17,7 +30,7 @@ module.exports = async (nsp) => {
     nsp.emit('cart-speed', data)
   })
 
-  eventManager.on('destination', (data) => {
+  eventManager.on('destination-change', (data) => {
     nsp.emit('destination', data)
   })
 
@@ -50,10 +63,20 @@ module.exports = async (nsp) => {
   nsp.on('connection', (socket) => {
     console.log('incoming connection')
 
-    cartOutgoingEvents.forEach((x) => {
-      socket.on(x, (data) => {
-        eventManager.emit(x, data)
-      })
+    adminIncomingEvents.map((x) => {
+      socket.on(x, (data) => eventManager.emit(x, data))
+    })
+    // cartOutgoingEvents.forEach((x) => {
+    //   socket.on(x, (data) => {
+    //     eventManager.emit(x, data)
+    //   })
+    // })
+    // cartOutgoingEvents.map((x) => {
+    //   socket.on(x, (data) => eventManager.emit(x, data))
+    // })
+
+    socket.on('tts', (data) => {
+      console.log("TTS: " + data)
     })
 
     socket.on('get', () => {
