@@ -61,7 +61,7 @@ module.exports = async (nsp) => {
   })
 
   nsp.on('connection', (socket) => {
-    console.log('incoming connection')
+    console.log('Incoming connection from admin')
 
     adminIncomingEvents.map((x) => {
       socket.on(x, (data) => eventManager.emit(x, data))

@@ -42,12 +42,18 @@ module.exports.handle = async (nsp) => {
   })
 
   nsp.on('connection', (socket) => {
+    console.log('Incoming connection from cart')
+
     localIncomingEvents.map((x) => {
       socket.on(x, (data) => eventManager.emit(x, data))
     })
 
     socket.on('change-destination', (x) => {
       console.log("Changed Destination: " + x)
+    })
+
+    socket.on('change-pullover', (x) => {
+      console.log("PULL OVER IS " + x)
     })
   })
 
