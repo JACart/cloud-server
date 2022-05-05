@@ -43,6 +43,12 @@ module.exports.handle = async (nsp) => {
 
   nsp.on('connection', (socket) => {
     console.log('Incoming connection from cart')
+    eventManager.emit('cart-connect', true)
+
+    socket.on('disconnect', () => {
+      eventManager.emit('cart-connect', false)
+      console.log('Cart Disconnected.')
+    })
 
     localIncomingEvents.map((x) => {
       socket.on(x, (data) => eventManager.emit(x, data))

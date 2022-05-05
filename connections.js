@@ -37,7 +37,7 @@ module.exports = {
     'path',
     'logs',
     'mph',
-    'connect',
+    'cart-connect',
     'summon-cancel',
     'summon-finish',
     'change-pullover',

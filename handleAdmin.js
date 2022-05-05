@@ -9,8 +9,6 @@ module.exports = async (nsp) => {
   })
 
   eventManager.on('get-destinations', (data) => {
-
-    console.log(data)
     nsp.emit('get-destinations', (data))
   })
 
