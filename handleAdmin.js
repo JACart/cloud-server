@@ -1,4 +1,4 @@
-const { cartOutgoingEvents, adminIncomingEvents, adminOutgoingEvents } = require('./connections')
+const { adminIncomingEvents, adminOutgoingEvents } = require('./connections')
 
 module.exports = async (nsp) => {
 
@@ -10,52 +10,6 @@ module.exports = async (nsp) => {
 
   eventManager.on('get-destinations', (data) => {
     nsp.emit('get-destinations', (data))
-  })
-
-  eventManager.on('log', (data) => {
-    nsp.emit('admin_log', data)
-  })
-
-  eventManager.on('client-gps', (data) => {
-    nsp.emit('client_gps', data)
-  })
-
-  eventManager.on('cart-gps', (data) => {
-    nsp.emit('cart-gps', data)
-  })
-
-  eventManager.on('cart-speed', (data) => {
-    nsp.emit('cart-speed', data)
-  })
-
-  eventManager.on('destination-change', (data) => {
-    nsp.emit('destination', data)
-  })
-
-  eventManager.on('path', (data) => {
-    console.log(data)
-    nsp.emit('path', data)
-  })
-
-  eventManager.on('active-change', (data) => {
-    console.log(data)
-    nsp.emit('active-change', data)
-  })
-
-  eventManager.on('cart-change', (data) => {
-    nsp.emit('cart_change', data)
-  })
-
-  eventManager.on('state-change', (data) => {
-    nsp.emit('state_change', data)
-  })
-
-  eventManager.on('logs', (data) => {
-    nsp.emit('logs', data)
-  })
-
-  eventManager.on('change-pullover', (data) => {
-    nsp.emit('pullover', data)
   })
 
   nsp.on('connection', (socket) => {
