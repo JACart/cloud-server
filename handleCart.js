@@ -63,6 +63,13 @@ module.exports.handle = async (nsp) => {
     socket.on('change-pullover', (x) => {
       console.log("PULL OVER IS " + x)
     })
+
+    // Temporary fix for client
+    socket.on('speed', (x) => {
+      eventManager.emit('cart-speed', x)
+    })
+
+    
   })
 
   

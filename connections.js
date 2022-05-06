@@ -11,6 +11,7 @@ module.exports = {
     'pullover',
   ],
   localIncomingEvents: [
+    'cart-status',
     'transcript',
     'get-destinations',
     'gps',
