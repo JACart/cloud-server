@@ -44,9 +44,11 @@ module.exports.handle = async (nsp) => {
   nsp.on('connection', (socket) => {
     console.log('Incoming connection from cart')
     eventManager.emit('cart-connect', true)
+    eventManager.emit('cart-active', true)  //App Client
 
     socket.on('disconnect', () => {
       eventManager.emit('cart-connect', false)
+      eventManager.emit('cart-active', false) //App Client
       console.log('Cart Disconnected.')
     })
 
